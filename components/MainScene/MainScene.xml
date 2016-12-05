@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="MainScene" extends="Scene">
+
+	<interface></interface>
+
+	<script type="text/brightscript" uri="pkg:/components/MainScene/MainSceneDataProvider.brs"/>
+
+	<children>
+
+		<Rectangle id="black"
+			width="1280"
+			height="720"
+			color="0x000000FF"/>
+
+		<Poster id="background"
+			width="1280"
+			height="720"
+			uri="pkg:/images/background_1.jpg"/>
+
+		<BetterPoster id="bottlerocketlogo"
+			width="0"
+			height="0"
+			loadDisplayMode="scaleToFit"
+			moveTo="[640,360]"
+			anchor="center"
+			uri="pkg:/images/bottlerocket_white.png" />
+
+			<Animation
+			  id = "imageTransitionAnimation"
+			  duration = "1"
+			  easeFunction = "linear">
+
+			  <FloatFieldInterpolator
+			    key = "[ 0.0, 0.5, 1.0 ]"
+			    keyValue = "[ 1.0, 0.0, 1.0 ]"
+			    fieldToInterp = "background.opacity" />
+
+			</Animation>
+
+			<Timer
+				id="imageTimer"
+				duration="0.5" />
+
+			<Timer
+				id="autoNextTimer"
+				repeat="true"
+				control="start"
+				duration="30"/>
+
+  </children>
+
+</component>
