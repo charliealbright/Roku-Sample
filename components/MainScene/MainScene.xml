@@ -15,6 +15,7 @@
 		<Poster id="background"
 			width="1280"
 			height="720"
+			loadDisplayMode="scaleToZoom"
 			uri="pkg:/images/background_1.jpg"/>
 
 		<BetterPoster id="bottlerocketlogo"
