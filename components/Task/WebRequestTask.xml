@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="WebRequestTask" extends="Task" xsi:noNamespaceSchemaLocation="http://rokudev.roku.com/rokudev/schema/RokuSceneGraph.xsd">
+    <interface>
+        <field id="url" type="string" />
+        <field id="data" type="assocarray" alwaysNotify="true"/>
+    </interface>
+
+    <script type="text/brightscript" uri="pkg:/components/Task/WebRequestTask.brs" />
+
+    <children></children>
+</component>

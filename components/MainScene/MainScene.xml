@@ -15,38 +15,48 @@
 		<Poster id="background"
 			width="1280"
 			height="720"
+			loadWidth="1280"
+			loadHeight="720"
 			loadDisplayMode="scaleToZoom"
-			uri="pkg:/images/background_1.jpg"/>
+			opacity="0"/>
 
-		<BetterPoster id="bottlerocketlogo"
-			width="0"
-			height="0"
-			loadDisplayMode="scaleToFit"
-			moveTo="[640,360]"
-			anchor="center"
-			uri="pkg:/images/bottlerocket_white.png" />
+		<Animation
+		  id = "imageFadeAnimation"
+		  duration = "0.75"
+		  easeFunction = "linear">
 
-			<Animation
-			  id = "imageTransitionAnimation"
-			  duration = "1"
-			  easeFunction = "linear">
+		  <FloatFieldInterpolator
+		    key = "[ 0.0, 0.75]"
+		    keyValue = "[ 1.0, 0.0]"
+		    fieldToInterp = "background.opacity" />
 
-			  <FloatFieldInterpolator
-			    key = "[ 0.0, 0.5, 1.0 ]"
-			    keyValue = "[ 1.0, 0.0, 1.0 ]"
-			    fieldToInterp = "background.opacity" />
+		</Animation>
 
-			</Animation>
+		<Animation
+		  id = "imageShowAnimation"
+		  duration = "0.75"
+		  easeFunction = "linear">
 
-			<Timer
-				id="imageTimer"
-				duration="0.5" />
+		  <FloatFieldInterpolator
+		    key = "[ 0.0, 0.75]"
+		    keyValue = "[ 0.0, 1.0]"
+		    fieldToInterp = "background.opacity" />
 
-			<Timer
-				id="autoNextTimer"
-				repeat="true"
-				control="start"
-				duration="30"/>
+		</Animation>
+
+		<Timer
+			id="imageTimer"
+			duration="0.75" />
+
+		<Timer
+			id="autoNextTimer"
+			repeat="true"
+			control="start"
+			duration="30"/>
+
+		<WebRequestTask
+			id="webRequestTask"
+			url="https://www.reddit.com/r/carporn/top/.json?t=all" />
 
   </children>
 
