@@ -17,39 +17,45 @@ function init()
     m.webRequestTask.observeField("data", "onDataReceived")
     m.webRequestTask.control = "RUN"
 
+    m.baseUrl = "https://www.reddit.com/r/carporn/top/.json?t=all"
+    m.after = ""
+
     m.imageIndex = 0
     m.urls = []
 end function
 
 function onKeyEvent(key as String, press as Boolean) as Boolean
-  if press then
-    if (key = "left") then
-      showPreviousImage()
-      return true
-    else if (key = "right") then
-      showNextImage()
-      return true
+    if press then
+        if (key = "left") then
+            if (m.imageIndex > 0)
+                showPreviousImage()
+                return true
+            end if
+        else if (key = "right") then
+            if (m.imageIndex < m.urls.count() - 1)
+                showNextImage()
+                return true
+            end if
+        end if
     end if
-  end if
-
-  return false
+    return false
 end function
 
 sub showNextImage()
-  startAnimation()
-  nextImageIndex()
-  m.autoNextTimer.control = "start"
+    startAnimation()
+    nextImageIndex()
+    m.autoNextTimer.control = "start"
 end sub
 
 sub showPreviousImage()
-  startAnimation()
-  previousImageIndex()
-  m.autoNextTimer.control = "start"
+    startAnimation()
+    previousImageIndex()
+    m.autoNextTimer.control = "start"
 end sub
 
 sub startAnimation()
-  m.fadeAnimation.control = "start"
-  m.imageTimer.control = "start"
+    m.fadeAnimation.control = "start"
+    m.imageTimer.control = "start"
 end sub
 
 sub switchImage()
@@ -59,17 +65,20 @@ sub switchImage()
 end sub
 
 sub nextImageIndex()
-  m.imageIndex++
-  if m.imageIndex > 24
-    m.imageIndex = 0
-  end if
+    m.imageIndex++
+    if m.imageIndex = m.urls.count() - 3
+        ?"[loadMore]"
+        loadMore()
+    end if
 end sub
 
 sub previousImageIndex()
-  m.imageIndex--
-  if m.imageIndex < 0
-    m.imageIndex = 24
-  end if
+    m.imageIndex--
+end sub
+
+sub loadMore()
+    m.webRequestTask.url = m.baseUrl + "&after=" + m.after
+    m.webRequestTask.control = "RUN"
 end sub
 
 sub onLoadStatusChanged()
@@ -92,6 +101,7 @@ sub onDataReceived()
                 m.urls.push(post.data.url)
             end if
         end for
+        m.after = response.data.after
         m.backgroundImage.uri = m.urls[m.imageIndex]
     else
         ?"[response is invalid]"
